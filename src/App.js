@@ -7,7 +7,7 @@ const defaultStyle = {
 };
 
 const textStyle = css`
-  color: blue;
+  color: black;
 `;
 
 let fakeServerData = {
@@ -64,9 +64,15 @@ class PlaylistCounter extends Component {
 
 class HoursCounter extends Component {
   render() {
+    let allSongs = this.props.playlists.reduce((songs, eachPlaylist)=> {
+      return songs.concat(eachPlaylist.songs)
+    },[]);
+    let totalDuration = allSongs.reduce(
+      (sum, eachSong) => sum + eachSong.duration
+      , 0);
     return (
       <div style = {{... defaultStyle, width: '20%',display: 'inline-block'}}>
-        <h2> {this.props.playlists && this.props.playlists.length} Hours </h2>
+        <h2> {Math.round(totalDuration/60)} Hours </h2>
       </div>
     );
   }
@@ -111,7 +117,8 @@ const H1 = styled.h1`
 
 class App extends Component {
   state = {serverData : {}}
-
+// above - how did we get rid of the 'this.state' part?
+// mentioned getting rid of componentDidMount - how do we do this
   componentDidMount() {
     setTimeout(()=> {
       this.setState({serverData: fakeServerData});
@@ -122,7 +129,6 @@ class App extends Component {
     return (
       <Wrapper>
         <H1> Playlist Generator </H1>
-        <H1 color="green"> Playlist Generator 2 </H1>
         {
           this.state.serverData.user ?
           <div>
