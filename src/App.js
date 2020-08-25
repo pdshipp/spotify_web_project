@@ -85,7 +85,8 @@ class Filter extends Component {
     return (
       <div style = {defaultStyle}>
         <img/>
-        <input type="text"/>
+        <input type="text" onKeyUp={event =>
+          this.props.onTextChange(event.target.value)}/>
       </div>
       )
   }
@@ -121,9 +122,10 @@ const H1 = styled.h1`
 
 
 class App extends Component {
-  state = {serverData : {}}
-// above - how did we get rid of the 'this.state' part?
-// mentioned getting rid of componentDidMount - how do we do this
+  state = {serverData : {},
+  filterString: ''
+  }
+// mentioned getting rid of constructor - how do we do this?
   componentDidMount() {
     setTimeout(()=> {
       this.setState({serverData: fakeServerData});
@@ -142,8 +144,11 @@ class App extends Component {
           </h2>
           <PlaylistCounter playlists={this.state.serverData.user.playlists}/>
           <HoursCounter playlists={this.state.serverData.user.playlists}/>
-          <Filter/>
-          {this.state.serverData.user.playlists.map(
+          <Filter onTextChange={text => this.setState({filterString: text})}/>
+          {this.state.serverData.user.playlists.filter(playlist =>
+            playlist.name.toLowerCase().includes(
+              this.state.filterString.toLowerCase())
+          ).map(
             playlist => <Playlist playlist={playlist}/>
           )}
         </div> : <h1> 'Loading...' </h1>
