@@ -22,7 +22,7 @@ passport.use(
     {
       clientID: keys.SPOTIFY.clientID,
       clientSecret: keys.SPOTIFY.clientSecret,
-      callbackURL: "http://localhost:8888/auth/spotify/callback",
+      callbackURL: "http://localhost:5000/auth/spotify/callback",
     },
     (accessToken, refreshToken, profile, cb) => {
       console.log(chalk.blue(JSON.stringify(profile)));
@@ -40,13 +40,16 @@ app.get(
   "auth/spotify",
   passport.authenticate("spotify", {
     scope: ["user-read-email", "user-read-private"],
+    showDialog: true,
   })
 );
+app.get("/auth/spotify", passport.authenticate("spotify"));
 app.get(
-  "http://localhost:8888/auth/spotify/callback",
-  passport.authenticate("spotify", (req, res) => {
+  "/auth/spotify/callback",
+  passport.authenticate("spotify"),
+  (req, res) => {
     res.redirect("/profile");
-  })
+  }
 );
 
 app.get("/user", (req, res) => {
