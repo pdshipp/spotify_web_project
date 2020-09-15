@@ -1,9 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 const passport = require("passport");
-const SpotifyStrategy = require("passport-spotify");
+const SpotifyStrategy = require("passport-spotify").Strategy;
 const keys = require("../config");
 const chalk = require("chalk");
+
 let user = {};
 
 passport.serializeUser((user, cb) => {
@@ -23,7 +24,7 @@ passport.use(
       clientSecret: keys.SPOTIFY.clientSecret,
       callbackURL: "http://localhost:8888/auth/spotify/callback",
     },
-    function (accessToken, refreshToken, profile, done, cb) {
+    (accessToken, refreshToken, profile, cb) => {
       console.log(chalk.blue(JSON.stringify(profile)));
       user = { ...profile };
       return cb(null, profile);

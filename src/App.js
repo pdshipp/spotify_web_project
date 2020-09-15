@@ -1,18 +1,14 @@
-import React, { Component } from "react";
+import React /*{ Component }*/ from "react";
 import "./App.css";
 import LoginButton from "./components/loginbutton";
 import styled, { css } from "styled-components";
-import queryString from "query-string";
-
-const defaultStyle = {
-  color: "black",
-};
+// import queryString from "query-string";
 
 const textStyle = css`
   color: black;
 `;
 
-class PlaylistCounter extends Component {
+/* class PlaylistCounter extends Component {
   render() {
     return (
       <div style={{ ...defaultStyle, width: "20%", display: "inline-block" }}>
@@ -71,7 +67,7 @@ class Playlist extends Component {
       </div>
     );
   }
-}
+} */
 
 const Wrapper = styled.div`
   text-align: center;
@@ -94,48 +90,3 @@ const App = () => {
 };
 
 export default App;
-
-/* class App extends Component {
-  state = { serverData: {}, filterString: "" };
-  componentDidMount() {
-    let parsed = queryString.parse(window.location.search);
-    let accessToken = parsed.access_token;
-
-    fetch("https://api.spotify.com/v1/me", {
-      headers: { Authorization: "Bearer " + accessToken },
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
-  }
-  render() {
-    let playlistsToRender = this.state.serverData.user
-      ? this.state.serverData.user.playlists.filter((playlist) =>
-          playlist.name
-            .toLowerCase()
-            .includes(this.state.filterString.toLowerCase())
-        )
-      : [];
-    return (
-      <Wrapper>
-        <H1> Playlist Generator </H1>
-        {this.state.serverData.user ? (
-          <div>
-            <h2 style={{ ...defaultStyle, "font-size": "40px" }}>
-              Welcome, {this.state.serverData.user.name}.
-            </h2>
-            <PlaylistCounter playlists={playlistsToRender} />
-            <HoursCounter playlists={playlistsToRender} />
-            <Filter
-              onTextChange={(text) => this.setState({ filterString: text })}
-            />
-            {playlistsToRender.map((playlist) => (
-              <Playlist playlist={playlist} />
-            ))}
-          </div>
-        ) : (
-          <loginButton />
-        )}
-      </Wrapper>
-    );
-  }
-} */
