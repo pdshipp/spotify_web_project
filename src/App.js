@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
+import LoginButton from "./components/loginbutton";
 import styled, { css } from "styled-components";
 import queryString from "query-string";
 
@@ -10,46 +11,6 @@ const defaultStyle = {
 const textStyle = css`
   color: black;
 `;
-
-let fakeServerData = {
-  user: {
-    name: "Pete",
-    playlists: [
-      {
-        name: "Canapes",
-        songs: [
-          { name: "Lost in Paris", duration: 1234 },
-          { name: "Water Baby", duration: 3456 },
-          { name: "Heartbreaker", duration: 6789 },
-        ],
-      },
-      {
-        name: "R&B",
-        songs: [
-          { name: "Do For Love", duration: 1234 },
-          { name: "Best Friend", duration: 3456 },
-          { name: "Just a Lil Bit", duration: 6789 },
-        ],
-      },
-      {
-        name: "Runnin'",
-        songs: [
-          { name: "No One Gets You", duration: 1234 },
-          { name: "Free Myself", duration: 3456 },
-          { name: "The Drive", duration: 6789 },
-        ],
-      },
-      {
-        name: "Dance",
-        songs: [
-          { name: "7 Days", duration: 1234 },
-          { name: "Believe", duration: 3456 },
-          { name: "The Bomb", duration: 6789 },
-        ],
-      },
-    ],
-  },
-};
 
 class PlaylistCounter extends Component {
   render() {
@@ -122,7 +83,19 @@ const H1 = styled.h1`
   color: ${(props) => props.color};
 `;
 
-class App extends Component {
+const App = () => {
+  return (
+    <Wrapper>
+      <H1 className="page-title">Playlist Generator</H1>
+      <p style={{ fontSize: 28 }}>Please Login with Spotify</p>
+      <LoginButton />
+    </Wrapper>
+  );
+};
+
+export default App;
+
+/* class App extends Component {
   state = { serverData: {}, filterString: "" };
   componentDidMount() {
     let parsed = queryString.parse(window.location.search);
@@ -160,16 +133,9 @@ class App extends Component {
             ))}
           </div>
         ) : (
-          <button
-            onClick={() => (window.location = "http://localhost:8888/login")}
-            style={{ padding: "20px", fontSize: "20px" }}>
-            {" "}
-            Sign in with Spotify{" "}
-          </button>
+          <loginButton />
         )}
       </Wrapper>
     );
   }
-}
-
-export default App;
+} */
