@@ -50,7 +50,7 @@ app.get(
   "/auth/spotify/callback",
   passport.authenticate("spotify"),
   (req, res) => {
-    res.redirect("/");
+    res.redirect("http://localhost:3000");
   }
 );
 
