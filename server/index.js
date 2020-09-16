@@ -26,8 +26,9 @@ passport.use(
     },
     (accessToken, refreshToken, profile, cb) => {
       console.log(chalk.blue(JSON.stringify(profile)));
+      console.log(accessToken);
       user = { ...profile };
-      return cb(null, profile);
+      return cb(null, profile, accessToken);
     }
   )
 );
@@ -44,11 +45,12 @@ app.get(
   })
 );
 app.get("/auth/spotify", passport.authenticate("spotify"));
+
 app.get(
   "/auth/spotify/callback",
   passport.authenticate("spotify"),
   (req, res) => {
-    res.redirect("/profile");
+    res.redirect("/");
   }
 );
 
