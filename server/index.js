@@ -5,6 +5,10 @@ const SpotifyStrategy = require("passport-spotify").Strategy;
 const keys = require("../config");
 const chalk = require("chalk");
 
+const app = express();
+app.use(cors());
+app.use(passport.initialize());
+
 let user = {};
 
 passport.serializeUser((user, cb) => {
@@ -32,10 +36,6 @@ passport.use(
     }
   )
 );
-
-const app = express();
-app.use(cors());
-app.use(passport.initialize());
 
 app.get(
   "auth/spotify",
